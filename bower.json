@@ -1,0 +1,22 @@
+{
+  "name": "Node-Angular-MongoDb-JWT-Auth",
+  "version": "0.0.1",
+  "authors": [ "Michael Cullen" ],
+  "description": "Auth with node, nG, Mongo & JWT",
+  "ignore": [
+  "**/*.txt",
+  "node_modules",
+  "bower_components",
+  "test",
+  "tests"
+  ],
+  "dependencies": {
+  "bootstrap": "~3",
+  "angular": "v1.3.0-beta.7",
+  "angular-route": "v1.3.0-beta.7",
+  "angular-resource": "v1.3.0-beta.7",
+  "angular-animate": "v1.3.0-beta.7"
+  },
+  "license": "MIT",
+  "private": true
+}

@@ -1,0 +1,1 @@
+exports.JWTsecret = 'This is the secret hush hush!';
