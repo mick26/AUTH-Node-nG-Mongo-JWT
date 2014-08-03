@@ -1,24 +1,25 @@
+/* ==========================================================
+ROUTES - dealing with the user authentication
+
+============================================================ */
+
 /* ========================================================== 
-External Modules/Packages Required
+Modules/Packages Required
 ============================================================ */
 //To sign i.e. create the JWT
-var jwt = require('jsonwebtoken');  		//https://npmjs.org/package/node-jsonwebtoken
-//Express middleware to validate a JSON Web token
-var expressJwt = require('express-jwt'); 	//https://npmjs.org/package/express-jwt
-										
-var db = require('./models/userModel');	//Mongoose Model
+var jwt = require('jsonwebtoken');  		//https://npmjs.org/package/node-jsonwebtoken										
+var db = require('../models/userModel');	//Mongoose Model
 
 /* ========================================================== 
 JSON Web Token Secret String
 ============================================================ */
-var secret = require('./config/jwtSecret');
+var secret = require('../config/jwtSecret');
 
 
 /* ========================================================== 
-Node Module that will be available in server.js
+Node Module
 ============================================================ */
-module.exports = function(app)
-{
+module.exports = {
 
 	/* ==========================================================
 	When you try to access a JWT secured route Express.js sends response 
@@ -35,25 +36,74 @@ module.exports = function(app)
 
 
 	/*================================================================
-	$HTTP post /logout
+	$HTTP post /register
 	=================================================================*/
-	app.post('/logout', function(req, res) {
-		res.send(200);
-	});
-	
+	register : function (req, res) {
+
+		var username = req.body.username || '';
+		var password = req.body.password || '';
+		var email = req.body.email || '';
+		var passwordConfirmation = req.body.passwordConfirmation || '';
+
+		//Angular form validation also ensures required fields are filled
+		//Check to ensure passwordConfirmation matches password
+		if (username == '' || password == '' || password != passwordConfirmation) {
+			return res.send(400);
+		}
+
+
+		//check if username exists already
+		UserModel.findOne({username: req.body.username}, function (err, user) {
+			
+			if (err) {
+				console.log(err);
+				res.status(401).send("Unauthorised-error finding username in DB");
+			}
+
+			//user exists already
+			else if(user) {
+				res.status(409).send("Conflict: username already exists");
+				//res.send(409, {status:409, message: 'Conflict - username already exists', type:'user-issue'});
+			}
+
+			//user does not exist already
+			else if (user == undefined) {
+			
+				var newUser = new UserModel( {
+					username : req.body.username,
+					password : req.body.password,
+					is_admin : true,
+					email : req.body.email
+				})
+
+				newUser.save(function(err) {
+					if (err) {
+						console.log(err);
+						res.status(500).send("Internal Server Error: problem saving user to DB");
+					}
+					else {
+						return res.status(200).send("New user saved to DB ok");
+					}
+				});	
+			}
+
+		})		
+	},
+
+
 
 	/*================================================================
 	$HTTP post /login
 	=================================================================*/
-	app.post('/login', function (req, res) 
-	{
+	login : function (req, res) {
 		//validate req.body.username and req.body.password
 	  	//if is invalid, return 401
 	  	var username = req.body.username || '';
 		var password = req.body.password || '';
 		
+		//Angular Form validation also checks to ensure username and password fields are filled
 		if (username == '' || password == '') { 
-			return res.send(401); 
+			return res.status(401).send("username or password fields are empty"); 
 		}
 
 		db.UserModel.findOne({username: req.body.username}, function (err, user) {
@@ -94,56 +144,26 @@ module.exports = function(app)
 				res.json({ token: token });
 			});
 		});
-	});
-
+	},
 
 	/*================================================================
-	$HTTP post /register
+	$HTTP post /logout
 	=================================================================*/
-	app.post('/register', function (req, res) {
-
-		var username = req.body.username || '';
-		var password = req.body.password || '';
-		var email = req.body.email || '';
-		var passwordConfirmation = req.body.passwordConfirmation || '';
-
-		if (username == '' || password == '' || password != passwordConfirmation) {
-			return res.send(400);
-		}
-
-
-		var newUser = new UserModel( {
-			username : req.body.username,
-			password : req.body.password,
-			is_admin : true,
-			email : req.body.email
-		})
-
-
-		newUser.save(function(err) {
-			if (err) {
-				console.log(err);
-				return res.send(500);
-			}
-			else {
-				return res.send(200);
-			}
-		});	
-			
-	});
-
+	logout : function(req, res) {
+		res.send(200);
+	},
+	
 
 	/*================================================================
 	$http GET /admin - secured by JWT 
 	JWT is TX by client in HTTP packet header, JWT is checked
 	Express will return 401 and stop the route if token is not valid
 	=================================================================*/
-	app.get('/admin', expressJwt({secret:secret.JWTsecret}) ,function (req, res) 	
-	{
+	getAdmin : function (req, res) {
 	  console.log('user ' + req.username + ' is calling /admin');
 	  console.info("req token=" +JSON.stringify(req.headers));
 	  res.send(req.username);
-	});
+	}
 
 }; /* @END/ module */
 

@@ -10,19 +10,20 @@
     <span ng-show="auth.isLogged">{{welcome}}</span>
 
     <!-- Form to input username and password  -->
-    <form ng-show="!AuthenticationService.isLogged" ng-submit="login()">
+    <form name="fmLogin" novalidate ng-show="!AuthenticationService.isLogged" ng-submit="login()">
 
       <div class="form-group">
         <label>Username</label>
-        <input type="text" class="form-control" name="username" ng-model="user.username">
+        <input type="text" class="form-control" name="username" ng-model="user.username" ng-required="true">
       </div>
 
       <div class="form-group">
         <label>Password</label>
-        <input type="password" class="form-control" name="password" ng-model="user.password">
+        <input type="password" class="form-control" name="password" ng-model="user.password" ng-required="true">
       </div>
 
-      <button type="submit" class="btn btn-warning btn-lg">Login</button>
+      <button type="submit" class="btn btn-warning btn-lg" ng-disabled="fmLogin.$invalid">Login</button>
+
 
     </form>
     

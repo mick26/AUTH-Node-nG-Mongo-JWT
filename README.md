@@ -1,12 +1,4 @@
-
-# A WORK IN PROGRESS!!!
-
-Working but not the complete article as yet 
-
-
-
 ## Synopsis
-
 
 
 Authentication with NodeJS, ExpressJS, AngularJS and MongoDB.
@@ -18,13 +10,13 @@ The server secures Angular route URL's with the help of JSON Web Tokens (JWT's).
 
 User creation/logon and Authentication is managed using the following $http routes: 
 
-* post /login			:	login using username & password
 * post /register		:	register a username, password, Email
+* post /login			:	login using username & password
 * get /admin			:	a route secured using JWT
 * post logout			:	logout and delete JWT on client
 
-If the user selects a secured route - the JWT is checked and if the JWT is not valid route processing will stop and a 401 (unauthorised) error will be returned.
 
+If the user selects a secured route - the JWT is checked and if the JWT is not valid route processing will stop and a 401 (unauthorised) error will be returned.
 
 
 # Packages Used
@@ -57,7 +49,7 @@ The program is based on a number of sources see server.js
 
 ## Technologies Used
  
-Node, Express 4.2, Angular, Mongoose, MongoDB, Robomongo MongoDB client, REST API, Bower, Bcryptjs,
+Node, Express 4.x, Angular, Mongoose, MongoDB, Robomongo MongoDB client, REST API, Bower, Bcryptjs,
 $http service to make AJAX requests in AngularJS.
 
 

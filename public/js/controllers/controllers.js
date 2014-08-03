@@ -24,13 +24,18 @@ angular.module('myApp.controllers', [])
 
           $http.post('/register', $scope.user) 
 
-            .success(function(data) {
+             .success(function(data, status, headers, config)  {
                 $location.path("/login");
             })
 
-            .error(function(status, data) {
-                console.log(status);
-                console.log(data);
+            .error(function(data, status, headers, config) {
+                if(status==409) {
+                  $scope.error = 'Duplicate username: Please select a different username';
+                }
+
+                if(status==400) {
+                  $scope.error = 'ERROR: Password Confirmation does not match Password';
+                }
             });
         }
     }

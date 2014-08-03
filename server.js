@@ -34,7 +34,7 @@ var http = require('http');
 /* ========================================================== 
 Internal App Modules/Packages Required
 ============================================================ */
-var authRoutes = require('./server/auth-routes.js');       	//Exchange routes
+var routes = require('./server/routes.js');       	//Exchange routes
 
 /* ========================================================== 
 Create a new application with Express
@@ -62,7 +62,7 @@ app.use(express.static(__dirname + "/public"));
 /* ========================================================== 
 authRoutes - using Express
 ============================================================ */
-authRoutes(app);
+routes(app);
 
 
 /* ========================================================== 
@@ -75,7 +75,7 @@ var server = http.createServer(app);
 Start HTTP Server Listening on a port
 ============================================================ */
 server.listen(app.get('port'), function() {
-  console.log('Express server listening on port ' .rainbow + app.get('port')  ) ;
+  console.log('Express server listening on port ' .red + app.get('port')  ) ;
 });
 
 

@@ -1,15 +1,23 @@
 {
   "name": "angular-JWT-token-auth",
+  "description":"Authentication using JSON Web Tokens",
   "version": "0.0.1",
+  "author": "Michael Cullen",
+  "private": true,
+  "main":"node server",
   "dependencies": {
-    "express": "~4.2.0",
+    "express": "~4.7.2",
     "express-jwt": "0.2.1",
     "jsonwebtoken": "0.4.0",
     "body-parser": "~1.2.1",
     "path": "~0.4.9",
-    "morgan": "~1.1.1",
     "colors": "~0.6.2",
     "bcryptjs": "~1.0.1",
     "mongoose": "~3.8.12"
+  },
+
+  "devDependencies": {
+    "morgan": "~1.1.1"
   }
+
 }
