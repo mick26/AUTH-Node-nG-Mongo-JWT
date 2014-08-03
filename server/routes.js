@@ -20,20 +20,6 @@ Node Module that will be available in server.js
 module.exports = function(app)
 {
 
-	/* ==========================================================
-	When you try to access a JWT secured route Express.js sends response 
-	"UnauthorizedError: No Authorization header was found"
-	without having to add any more code.
-	============================================================ */
-	/* NOT REQUIRED
-	app.use(function(err, req, res, next) {
-  		if (err.constructor.name === 'UnauthorizedError') {
-    		res.send(401, 'Unauthorized');
-  		}
-	});
-	*/
-
-
 	/* ========================================================== 
 	User Routes
 	============================================================ */
