@@ -65,8 +65,8 @@ angular.module('myApp.controllers', [])
         var profile = JSON.parse(url_base64_decode(encodedProfile));
 		
     		//console.log("profile = " + JSON.stringify(profile));			//TEST
-    		console.log("Email = " + JSON.stringify(profile.email));			//TEST
-        console.log("Username = " + JSON.stringify(profile.username));      //TEST
+    		//console.log("Email = " + JSON.stringify(profile.email));			//TEST
+        //console.log("Username = " + JSON.stringify(profile.username));      //TEST
     		$scope.error = '';
         $rootScope.welcome = 'Welcome ' + JSON.stringify(profile.username);		
         // $location.url('/login');
@@ -102,14 +102,11 @@ angular.module('myApp.controllers', [])
     {
       console.log("Entered Private /Admin area success: data = " + JSON.stringify(data));
 
-
         var encodedProfile =$window.sessionStorage.token.split('.')[1];
         var profile = JSON.parse(url_base64_decode(encodedProfile));
-    
-        //console.log("profile = " + JSON.stringify(profile));      //TEST
-        console.log("firstname = " + JSON.stringify(profile.firstname));      //TEST
+  
         $scope.error = '';
-        $rootScope.welcome = 'Welcome ' + JSON.stringify(profile.firstname);   
+        $rootScope.welcome = 'Welcome ' + JSON.stringify(profile.username);   
 
     })
     
@@ -144,8 +141,7 @@ angular.module('myApp.controllers', [])
 			//Erase JWT token if the user fails to log in
 			delete $window.sessionStorage.token; 
 
-			console.log("/logout SUCCESS");
-	//		$scope.message = $scope.message + ' ' + data.first_name; //
+			//console.log("/logout SUCCESS");
 
       $location.url('/login');
 

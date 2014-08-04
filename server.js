@@ -50,7 +50,10 @@ app.set('port', process.env.PORT || 8800);
 /* ========================================================== 
 Use Middleware
 ============================================================ */
-app.use(bodyParser()); 				//bodyParser includes JSON & Urlencoded
+//app.use(bodyParser()); 				//bodyParser includes JSON & Urlencoded
+// parse application/json
+app.use(bodyParser.json())
+
 app.use(logger('dev'));				//log request in dev mode only to the console
 
 /* ========================================================== 

@@ -1,5 +1,6 @@
 /* ==========================================================
 ROUTES - dealing with the user authentication
+Route Definitions
 
 ============================================================ */
 
@@ -48,7 +49,7 @@ module.exports = {
 		//Angular form validation also ensures required fields are filled
 		//Check to ensure passwordConfirmation matches password
 		if (username == '' || password == '' || password != passwordConfirmation) {
-			return res.send(400);
+			return res.status(400).send("Bad Request:Registration error");
 		}
 
 
@@ -110,17 +111,17 @@ module.exports = {
 			
 			if (err) {
 				console.log(err);
-				return res.send(401);
+				return res.status(401).end();
 			}
 
 			if (user == undefined) {
-				return res.send(401);
+				return res.status(401).send("User undefined");
 			}
 			
 			user.comparePassword(req.body.password, function(err, isMatch) {
 				if (!isMatch) {					
 					console.log("Attempt failed to login with " + user.username);
-					return res.send(401);
+					return res.status(401).send("Password does not match");
 	            }
 
 	           	var userProfile = {
@@ -150,7 +151,7 @@ module.exports = {
 	$HTTP post /logout
 	=================================================================*/
 	logout : function(req, res) {
-		res.send(200);
+		res.status(200).end();
 	},
 	
 

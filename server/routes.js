@@ -1,6 +1,8 @@
 /* ========================================================== 
-External Modules/Packages Required
+Route Declarations
+
 ============================================================ */
+
 //Express middleware to validate a JSON Web token
 var expressJwt = require('express-jwt'); 	//https://npmjs.org/package/express-jwt
 										
