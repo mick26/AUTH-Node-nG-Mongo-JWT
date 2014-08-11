@@ -16,7 +16,15 @@ User creation/logon and Authentication is managed using the following $http rout
 * post logout			:	logout and delete JWT on client
 
 
-If the user selects a secured route - the JWT is checked and if the JWT is not valid route processing will stop and a 401 (unauthorised) error will be returned.
+# JWT Authentication Process
+
+* Client sends valid credentials (e.g. username and password) to the Node server over HTTP.
+* Node server authenticates credentials and if ok then creates a JWT using jsonwebtoken.js middleware and sends the JWT to the client.
+* Client stores the token in session storage.
+* The $httpProvider Interceptor code in app.js adds the JWT to the header of each HTTP request to the server (Authorization header).
+* The Node server can then read the token from the client. 
+* JWT authentication is added to Express routes using express-jwt.js middleware. 
+* When JWT protected routes are requested by the client the JWT is validated on the server. If the JWT is not valid route processing will stop and a 401 (unauthorised) error will be returned to the client.
 
 
 # Packages Used

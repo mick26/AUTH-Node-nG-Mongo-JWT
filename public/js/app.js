@@ -46,7 +46,7 @@ angular.module('myApp', ['myApp.controllers', 'myApp.services', 'ngRoute'])
 
     .when('/about', {
         templateUrl: 'views/about.tpl.html',
-        //controller: 'LogoutCtrl',
+        controller: 'AboutCtrl',
         access: { requiredLogin: false }
       })	  
 

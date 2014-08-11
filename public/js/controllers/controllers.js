@@ -4,7 +4,7 @@
  **********************************************************************/
 angular.module('myApp.controllers', [])
 
-
+  
 
   /**********************************************************************
    Register controller
@@ -82,7 +82,7 @@ angular.module('myApp.controllers', [])
   		
   		  //Handle login errors here
         $scope.error = 'Error: Invalid user or password';
-        $scope.welcome = 'Invalid User';
+        $rootScope.welcome = 'Invalid User';
       });
   }  
 })
@@ -152,8 +152,28 @@ angular.module('myApp.controllers', [])
 		{
 			console.log("/logout ERROR");
 			alert(data);
-		});
-});
+		})
+})
+
+
+/**********************************************************************
+* About controller
+**********************************************************************/
+.controller('AboutCtrl', function($scope, $window, $rootScope) {
+    $scope.message = 'Look! I am an about page.';
+
+    //If JWT exists in session storage i.e. user logged in
+    //get username from JWT
+    if($window.sessionStorage.token) {
+          var encodedProfile =$window.sessionStorage.token.split('.')[1];
+          var profile = JSON.parse(url_base64_decode(encodedProfile));
+          //console.log("***profile = " + JSON.stringify(profile));            //TEST
+
+          $rootScope.welcome = 'Welcome ' + JSON.stringify(profile.username);  
+      }
+}); 
+
+
 
 
 

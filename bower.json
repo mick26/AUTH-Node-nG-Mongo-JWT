@@ -1,21 +1,22 @@
 {
   "name": "Node-Angular-MongoDb-JWT-Auth",
   "version": "0.0.1",
-  "authors": [ "Michael Cullen" ],
-  "description": "Auth with node, nG, Mongo & JWT",
+  "authors": [
+    "Michael Cullen"
+  ],
+  "description": "Authentication with JSON Web Tokens in Node and Angular",
   "ignore": [
-  "**/*.txt",
-  "node_modules",
-  "bower_components",
-  "test",
-  "tests"
+    "**/*.txt",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
   ],
   "dependencies": {
-  "bootstrap": "~3",
-  "angular": "v1.3.0-beta.7",
-  "angular-route": "v1.3.0-beta.7",
-  "angular-resource": "v1.3.0-beta.7",
-  "angular-animate": "v1.3.0-beta.7"
+    "bootstrap": "~3.2.0",
+    "angular": "~1.2.21",
+    "angular-route": "~1.2.21",
+    "jquery": "~2.1.1"
   },
   "license": "MIT",
   "private": true

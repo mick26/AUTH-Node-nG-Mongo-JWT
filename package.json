@@ -4,7 +4,7 @@
   "version": "0.0.1",
   "author": "Michael Cullen",
   "private": true,
-  "main":"node server",
+  "main":"node server.js",
   "dependencies": {
     "express": "~4.7.2",
     "express-jwt": "0.2.1",
@@ -17,7 +17,7 @@
   },
 
   "devDependencies": {
-    "morgan": "~1.1.1"
+    "morgan": "~1.2.2"
   }
 
 }
