@@ -1,43 +1,62 @@
 
+'use strict';
+
 /**********************************************************************
  * Module - For Controllers
  **********************************************************************/
 angular.module('myApp.controllers', [])
-
   
 
   /**********************************************************************
    Register controller
    **********************************************************************/
-
-  .controller('RegisterCtrl', function ($scope, $http, $location, $window, AuthenticationService, $rootScope) {
+  .controller('RegisterCtrl', function ($scope, $http, $location, $window, AuthenticationService, $rootScope, $log) {
 
     $scope.register = function register(username, password, passwordConfirm) {
 
         if (AuthenticationService.isLogged) {
-          console.info("Logged in already!!!!"); //TEST
+          $log.info("Logged in already!!!!"); //TEST
           $location.path("/admin");
         }
+
         else {
-          console.info("scope.register= " +$scope.user);  //TEST
+          //Request
+          userService.registerUser($scope.user)                                    
+          //Response Handler
+          .then(function(user) {   
+            $log.info("You are now Registered");
+            $location.path("/login");
+          },
+          function(error) {
+              $log.info("Error when trying to Register");
+          })        
+      };
 
 
-          $http.post('/register', $scope.user) 
 
-             .success(function(data, status, headers, config)  {
-                $location.path("/login");
-            })
 
-            .error(function(data, status, headers, config) {
-                if(status==409) {
-                  $scope.error = 'Duplicate username: Please select a different username';
-                }
 
-                if(status==400) {
-                  $scope.error = 'ERROR: Password Confirmation does not match Password';
-                }
-            });
-        }
+
+
+          //console.info("scope.register= " +$scope.user);  //TEST
+          // $http.post('/register', $scope.user) 
+
+          //    .success(function(data, status, headers, config)  {
+          //       $location.path("/login");
+          //   })
+
+          //   .error(function(data, status, headers, config) {
+          //       if(status==409) {
+          //         $scope.error = 'Duplicate username: Please select a different username';
+          //       }
+
+          //       if(status==400) {
+          //         $scope.error = 'ERROR: Password Confirmation does not match Password';
+          //       }
+          //   });
+
+        //}
+
     }
   })
 

@@ -7,7 +7,7 @@
     <h1><span class="fa fa-sign-in"></span> Login</h1>
 
     <!-- Show welcome message when logged in -->
-    <span ng-show="auth.isLogged">{{welcome}}</span>
+    <h2><span ng-show="auth.isLogged" class="label label-success">{{message.success}}</span></h2>
 
     <!-- Form to input username and password  -->
     <form name="fmLogin" novalidate ng-show="!AuthenticationService.isLogged" ng-submit="login()">
@@ -27,12 +27,13 @@
 
     </form>
     
-    <div>{{error}}</div>
+    <h2><span class="label label-info">{{message.info}}</span></h2>
+    <h2><span class="label label-warning">{{message.error}}</span></h2>
 
     <hr>
 
     <p>Need an account? <a href="#/register">Register</a></p>
-    <p>Or go <a href="/">home</a>.</p>
+    <p>Or go <a href="#/">home</a>.</p>
 
     </div>
 

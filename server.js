@@ -20,6 +20,8 @@ OAuthO Book: http://hueniverse.com/oauth/
 https://docs.auth0.com/nodejs-tutorial
 http://jwt.io/
 ============================================================ */
+'use strict';
+
 
 /* ========================================================== 
 External Modules/Packages Required

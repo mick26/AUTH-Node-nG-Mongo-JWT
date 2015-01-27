@@ -37,12 +37,17 @@
     </div>
 
   </form>
-  
-  <div>{{error}}</div>
- 
+
+  <div>
+    <h2><span class="label label-info">{{message.info}}</span></h2>
+    <h2><span class="label label-warning">{{message.error}}</span></h2>
+    <h2><span class="label label-success">{{message.success}}</span></h2>
+  </div>
+
+
   <hr>
   <p>Already have an account? <a href="#/login">Login</a></p>
-  <p>Or go <a href="/">home</a>.</p>
+  <p>Or go <a href="#/">home</a>.</p>
  
 </div>
 

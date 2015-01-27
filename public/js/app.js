@@ -1,8 +1,8 @@
-
+'use strict';
 /*================================================
 Main Module
 ================================================ */
-angular.module('myApp', ['myApp.controllers', 'myApp.services', 'ngRoute'])
+angular.module('myApp', ['myApp.userControllers', 'myApp.authServices', 'myApp.userServices', 'ngRoute', 'myApp.base64Service'])
 
 
 .config(function ($routeProvider, $locationProvider, $httpProvider) 
@@ -20,14 +20,32 @@ angular.module('myApp', ['myApp.controllers', 'myApp.services', 'ngRoute'])
     $routeProvider
 
       .when('/', {
-        templateUrl: '/views/main.tpl.html'
-		    //access: {requiredLogin: false}
-        //controller: 'UserCtrl'
+        templateUrl: '/views/main.tpl.html',
+        controller: 'MainCtrl',
+        resolve: {
+          app: function($q, $timeout) {
+              var defer = $q.defer();
+              $timeout(function() {
+                  defer.resolve();
+              }, 2000);
+              return defer.promise;
+          }
+        },
+        access: {requiredLogin: false}
       })
 
       .when('/admin', {
         templateUrl: 'views/admin.tpl.html',
         controller: 'AdminCtrl',
+        resolve: {
+          app: function($q, $timeout) {
+              var defer = $q.defer();
+              $timeout(function() {
+                  defer.resolve();
+              }, 4000);
+              return defer.promise;
+          }
+        },
 		    access: {requiredLogin: true}
       })
 	
@@ -35,12 +53,30 @@ angular.module('myApp', ['myApp.controllers', 'myApp.services', 'ngRoute'])
       .when('/login', {
         templateUrl: 'views/login.tpl.html',
         controller: 'LoginCtrl',
+        resolve: {
+          app: function($q, $timeout) {
+              var defer = $q.defer();
+              $timeout(function() {
+                  defer.resolve();
+              }, 2000);
+              return defer.promise;
+          }
+        },
 		    access: {requiredLogin: true}
       })
 	  
 	  .when('/logout', {
         templateUrl: 'views/login.tpl.html',
         controller: 'LogoutCtrl',
+        resolve: {
+          app: function($q, $timeout) {
+              var defer = $q.defer();
+              $timeout(function() {
+                  defer.resolve();
+              }, 2000);
+              return defer.promise;
+          }
+        },
         access: { requiredLogin: true }
       })
 
@@ -52,7 +88,16 @@ angular.module('myApp', ['myApp.controllers', 'myApp.services', 'ngRoute'])
 
      .when('/register', {
         templateUrl: 'views/register.tpl.html',
-        controller: 'RegisterCtrl'
+        controller: 'RegisterCtrl',
+        resolve: {
+          app: function($q, $timeout) {
+              var defer = $q.defer();
+              $timeout(function() {
+                  defer.resolve();
+              }, 2000);
+              return defer.promise;
+          }
+        },
       })
       
       .otherwise({
@@ -75,29 +120,6 @@ angular.module('myApp', ['myApp.controllers', 'myApp.services', 'ngRoute'])
 	
 
 })
-
-
-
-
-//Ref. polifyll https://github.com/davidchambers/Base64.js
-//this is used to parse the profile contained in the JWT
-function url_base64_decode(str) 
-{
-  var output = str.replace('-', '+').replace('_', '/');
-  switch (output.length % 4) {
-    case 0:
-      break;
-    case 2:
-      output += '==';
-      break;
-    case 3:
-      output += '=';
-      break;
-    default:
-      throw 'Illegal base64url string!';
-  }
-  return window.atob(output); 
-};
 
 
 /*

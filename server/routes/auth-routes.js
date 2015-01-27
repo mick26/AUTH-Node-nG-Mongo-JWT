@@ -52,43 +52,45 @@ module.exports = {
 			return res.status(400).send("Bad Request:Registration error");
 		}
 
+		else {
 
-		//check if username exists already
-		UserModel.findOne({username: req.body.username}, function (err, user) {
-			
-			if (err) {
-				console.log(err);
-				res.status(401).send("Unauthorised-error finding username in DB");
-			}
+			//check if username exists already
+			UserModel.findOne({username: req.body.username}, function (err, user) {
+				
+				if (err) {
+					console.log(err);
+					res.status(401).send("Unauthorised-error finding username in DB");
+				}
 
-			//user exists already
-			else if(user) {
-				res.status(409).send("Conflict: username already exists");
-				//res.send(409, {status:409, message: 'Conflict - username already exists', type:'user-issue'});
-			}
+				//user exists already
+				else if(user) {
+					res.status(409).send("Conflict: username already exists");
+					//res.send(409, {status:409, message: 'Conflict - username already exists', type:'user-issue'});
+				}
 
-			//user does not exist already
-			else if (user == undefined) {
-			
-				var newUser = new UserModel( {
-					username : req.body.username,
-					password : req.body.password,
-					is_admin : true,
-					email : req.body.email
-				})
+				//user does not exist already
+				else if (user == undefined) {
+				
+					var newUser = new UserModel( {
+						username : req.body.username,
+						password : req.body.password,
+						is_admin : true,
+						email : req.body.email
+					})
 
-				newUser.save(function(err) {
-					if (err) {
-						console.log(err);
-						res.status(500).send("Internal Server Error: problem saving user to DB");
-					}
-					else {
-						return res.status(200).send("New user saved to DB ok");
-					}
-				});	
-			}
+					newUser.save(function(err) {
+						if (err) {
+							console.log(err);
+							res.status(500).send("Internal Server Error: problem saving user to DB");
+						}
+						else {
+							return res.status(200).send("New user saved to DB ok");
+						}
+					});	
+				}
 
-		})		
+			})
+		};		
 	},
 
 
@@ -106,45 +108,48 @@ module.exports = {
 		if (username == '' || password == '') { 
 			return res.status(401).send("username or password fields are empty"); 
 		}
+		else {
 
-		db.UserModel.findOne({username: req.body.username}, function (err, user) {
-			
-			if (err) {
-				console.log(err);
-				return res.status(401).end();
-			}
+			db.UserModel.findOne({username: req.body.username}, function (err, user) {
+				
+				if (err) {
+					console.log(err);
+					return res.status(401).end();
+				}
 
-			if (user == undefined) {
-				return res.status(401).send("User undefined");
-			}
-			
-			user.comparePassword(req.body.password, function(err, isMatch) {
-				if (!isMatch) {					
-					console.log("Attempt failed to login with " + user.username);
-					return res.status(401).send("Password does not match");
-	            }
+				if (user == undefined) {
+					return res.status(401).send("User undefined");
+				}
+				
+				user.comparePassword(req.body.password, function(err, isMatch) {
+					if (!isMatch) {					
+						console.log("Attempt failed to login with " + user.username);
+						return res.status(401).send("Password does not match");
+		            }
 
-	           	var userProfile = {
-					username: user.username,
-					admin: user.is_admin,
-					created: user.created,
-					email: user.email
-				};
+		           	var userProfile = {
+						username: user.username,
+						admin: user.is_admin,
+						created: user.created,
+						email: user.email
+					};
 
-				/*
-				*Build the JWT - using jsonwebtoken.js method sign(payload, secretOrPrivateKey, options)
-				*return type is a string
-				*put users profile inside the JWT (payload)
-				*Set token to expire in 60 min (option)
-				*/
-				var token = jwt.sign(userProfile, secret.JWTsecret, { expiresInMinutes: 60*1 });
+					/*
+					*Build the JWT - using jsonwebtoken.js method sign(payload, secretOrPrivateKey, options)
+					*return type is a string
+					*put users profile inside the JWT (payload)
+					*Set token to expire in 60 min (option)
+					*/
+					var token = jwt.sign(userProfile, secret.JWTsecret, { expiresInMinutes: 60*1 });
 
-				/*
-				*Send the token as JSON to user
-				*/
-				res.json({ token: token });
+					/*
+					*Send the token as JSON to user
+					*/
+					res.json({ token: token });
+				});
 			});
-		});
+		};
+
 	},
 
 	/*================================================================

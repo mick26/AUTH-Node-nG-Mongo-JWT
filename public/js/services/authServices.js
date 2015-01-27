@@ -1,4 +1,4 @@
-angular.module('myApp.services', [])
+angular.module('myApp.authServices', [])
 
 
 .factory('AuthenticationService', function($rootScope, $window) {
